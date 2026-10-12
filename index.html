@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAHIM TOP UP</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b0b;color:white;font-family:Arial,sans-serif}
+header{background:#151515;text-align:center;padding:25px 12px;border-bottom:2px solid #d6ae45}
+header h1{color:#e6c15a;margin:0;font-size:29px;letter-spacing:1px}
+header p{color:#ccc;margin:10px 0 0}
+.hero{text-align:center;padding:25px 12px}
+.hero h2{color:#f1cf6a}
+.hero p{color:#bbb}
+.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px}
+.card{background:#191919;border:1px solid #41351c;border-radius:14px;padding:14px;text-align:center}
+.emoji{font-size:40px}
+.card h3{color:#e6c15a}
+.price{font-size:18px;font-weight:bold;margin:12px}
+button{background:#d8b34d;color:#111;border:0;padding:11px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%}
+.cart{margin:14px;padding:18px;background:#191919;border-radius:12px}
+.cart h2{color:#e6c15a}
+input{width:100%;padding:12px;margin:7px 0;background:#292929;border:1px solid #555;border-radius:7px;color:white}
+footer{text-align:center;color:#888;padding:20px}
+.small{color:#aaa;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>RAHIM TOP UP</h1>
+<p>متجرك لشحن الألعاب 🎮</p>
+</header>
+<section class="hero">
+<h2>اشحن لعبتك بكل سهولة</h2>
+<p>اختار اللعبة والباقة، ومن بعد ابعث طلبك عبر واتساب.</p>
+</section>
+
+<section class="games">
+<div class="card">
+<div class="emoji">🔥</div>
+<h3>Free Fire</h3>
+<p>100 جوهرة</p>
+<div class="price">250 دج</div>
+<button onclick="add('Free Fire - 100 جوهرة',250)">أضف للسلة</button>
+</div>
+<div class="card">
+<div class="emoji">🎯</div>
+<h3>Free Fire</h3>
+<p>310 جوهرة</p>
+<div class="price">650 دج</div>
+<button onclick="add('Free Fire - 310 جوهرة',650)">أضف للسلة</button>
+</div>
+<div class="card">
+<div class="emoji">🪖</div>
+<h3>PUBG Mobile</h3>
+<p>60 UC</p>
+<div class="price">300 دج</div>
+<button onclick="add('PUBG Mobile - 60 UC',300)">أضف للسلة</button>
+</div>
+<div class="card">
+<div class="emoji">⚽</div>
+<h3>eFootball</h3>
+<p>باقة تجريبية</p>
+<div class="price">500 دج</div>
+<button onclick="add('eFootball - باقة تجريبية',500)">أضف للسلة</button>
+</div>
+</section>
+
+<section class="cart">
+<h2>🛒 سلة المشتريات</h2>
+<div id="items">السلة فارغة</div>
+<h3>المجموع: <span id="total">0</span> دج</h3>
+<input id="player" placeholder="معرّف اللاعب ID">
+<input id="buyer" placeholder="اسمك">
+<button onclick="order()">اطلب عبر واتساب</button>
+<p class="small">الأسعار المعروضة تجريبية وليست تأكيدًا للأسعار الفعلية.</p>
+</section>
+<footer>© RAHIM TOP UP</footer>
+
+<script>
+let cart=[];
+function add(name,price){
+cart.push({name,price});
+show();
+}
+function show(){
+document.getElementById('items').innerHTML=cart.length?
+cart.map((x,i)=>'<p>'+x.name+' — '+x.price+' دج <button onclick="removeItem('+i+')" style="width:auto;padding:5px 10px">حذف</button></p>').join(''):
+'السلة فارغة';
+document.getElementById('total').textContent=cart.reduce((s,x)=>s+x.price,0);
+}
+function removeItem(i){cart.splice(i,1);show();}
+function order(){
+if(!cart.length){alert('زيد باقة للسلة أولاً');return;}
+let player=document.getElementById('player').value.trim();
+let buyer=document.getElementById('buyer').value.trim();
+if(!player||!buyer){alert('دخل اسمك ومعرّف اللاعب');return;}
+let msg='طلب جديد من RAHIM TOP UP%0Aالاسم: '+encodeURIComponent(buyer)+'%0Aمعرّف اللاعب: '+encodeURIComponent(player)+'%0A';
+cart.forEach(x=>msg+=encodeURIComponent(x.name+' - '+x.price+' دج')+'%0A');
+msg+='المجموع: '+cart.reduce((s,x)=>s+x.price,0)+' دج';
+window.open('https://wa.me/213562949660?text='+msg,'_blank');
+}
+</script>
+</body>
+  </html>
